@@ -3,21 +3,14 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
-#include <chrono>
-// boost geometry
-#include <boost/geometry.hpp>
-#include <boost/geometry/geometries/point.hpp>
-#include <boost/geometry/geometries/box.hpp>
-#include <boost/geometry/index/rtree.hpp>
-#include <boost/foreach.hpp>
 
-namespace bg = boost::geometry;
-namespace bgi = boost::geometry::index;
-typedef bg::model::point<float, 2, bg::cs::cartesian> point;
-typedef bg::model::box<point> box;
-typedef std::pair<point, unsigned> value;
+#include "header.h"
 
 std::mt19937 rng;
+
+std::vector<float> initialisePositions(int nItems, float maxSize);
+
+bgi::rtree< value, bgi::quadratic<16> > initRtree (std::vector<float> pos);
 
 // fun to initialise positions
 std::vector<float> initialisePositions(int nItems, float maxSize) {
@@ -74,7 +67,6 @@ int main(int argc, char *argv[])
         }
 
         std::cout << "n near items = " << itemId.size() << "\n";
-
 
         itemId.clear();
         nearItems.clear();
